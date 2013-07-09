@@ -21,6 +21,7 @@
 	<link href="<?php echo $page_info->path; ?>public/bootstrap/bootstrap.min.css" rel="stylesheet" />
 	<script src="<?php echo $page_info->path; ?>public/bootstrap/jquery.min.js"></script>
 	<script src="<?php echo $page_info->path; ?>public/bootstrap/jquery_ui.min.js"></script>
+	<script src="<?php echo $page_info->path; ?>public/bootstrap/jeditable.min.js"></script>
 	<script src="<?php echo $page_info->path; ?>public/bootstrap/bootstrap.min.js"></script>
 	
 	<!-- sortable -->
@@ -42,6 +43,9 @@
 
 				}
 			});
+		/* not yet implemented */
+		 $('.edit').editable('dummy.php', { event     : "click",  style   : 'display: inline'	});
+		
 		$( "#sortable" ).disableSelection();
 	  });
 	</script>
@@ -52,3 +56,5 @@
 <body>
 	<!-- we use a simple bootstrap template, this is to your likings ofcourse -->
 	<div class="row">
+	
+	
