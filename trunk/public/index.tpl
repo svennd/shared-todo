@@ -36,11 +36,32 @@ Todo List
 		foreach ($todos as $todo) {
 			if($todo['id'] == $tid)
 			{
-				echo "<li id='" . $todo['id'] . "'><i class='icon-resize-vertical'></i><b><a href='?todo_id=" . $todo['id'] . "'>". $todo['title'] ."</a></b></li>";
+				echo 
+					"<li id='" . $todo['id'] . "'>
+						<div class='input-append'>
+							<i class='icon-resize-vertical'></i>
+							<input class='span2' id='appendedInputButtons' type='text'>
+							<div class='btn-group'>
+								<a class='btn' href='#'>test</a>
+							</div>
+							</div>
+					</li>";
+					//echo 
+						//"<li id='" . $todo['id'] . "'><i class='icon-resize-vertical'></i><b><a href='?todo_id=" . $todo['id'] . "'>". $todo['title']  .
+						//"</a></b><label class='checkbox inline'><input type='checkbox' id='inlineCheckbox1' value='option1'></label></li>";
 			}
 			else
 			{
-				echo "<li id='" . $todo['id'] . "'><i class='icon-resize-vertical'></i><a href='?todo_id=" . $todo['id'] . "'>". $todo['title'] ."</a></li>";
+					echo 
+						"<li id='" . $todo['id'] . "'><i class='icon-resize-vertical'></i><b><a href='?todo_id=" . $todo['id'] . "'>". $todo['title']  .
+						"</a></b><label class='checkbox inline'><input type='checkbox' id='inlineCheckbox1' value='option1'></label></li>";
+				echo 
+					"<li id='" . $todo['id'] . "'><div class='input-append'><i class='icon-resize-vertical'></i>
+						<input class='span2' id='appendedInputButtons' type='text'>
+						<button class='btn' type='button'>Finished</button>
+						<button class='btn' type='button'>Info</button>
+						</div></li>";
+				//echo "<li id='" . $todo['id'] . "'><i class='icon-resize-vertical'></i><a href='?todo_id=" . $todo['id'] . "'>". $todo['title'] ."</a></li>";
 			}
 		}
 	}
