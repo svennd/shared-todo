@@ -11,7 +11,7 @@ if ( !isset($this) ){ exit('direct_acces_not_allowed'); }
 // configuration of database
 $host 		= 'localhost';
 $user 		= 'root';
-$password 	= 'test';
+$password 	= '';
 $database 	= 'shared_todo';
 
 // database type or method
