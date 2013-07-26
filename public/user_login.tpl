@@ -1,9 +1,21 @@
-<div class="offset1 row11">
-<h3>Login</h3>
-
-<form action="ucp.php?log&data" method="POST">
-user 	: 	<input type="text" name="username" /><br/>
-pasword : 	<input type="text" name="password" /><br/>
-		<input type="submit" name="submit" />
+<form class="form-horizontal" method="POST" action="?log&data">
+        <fieldset>
+          <legend>User Login</legend>
+          <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+              <input type="text" id="username" name="username" placeholder="User" >
+             </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+              <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+          </div>
+		
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Log In</button>
+          </div>
+        </fieldset>
 </form>
-</div>

@@ -1,10 +1,26 @@
-<div class="offset1 row11">
-<h3>New User</h3>
-
-<form action="ucp.php?reg&data" method="POST">
-user 	: 	<input type="text" name="username" /><br/>
-pasword : 	<input type="text" name="password" /><br/>
-email : 	<input type="text" name="email" /><br/>
-		<input type="submit" name="submit" />
+<form class="form-horizontal" method="POST" action="?reg&data">
+        <fieldset>
+          <legend>User Registration</legend>
+          <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+              <input type="text" id="username" name="username" placeholder="User" >
+             </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+              <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+              <input type="text" id="email" name="email" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+        </fieldset>
 </form>
-</div>
