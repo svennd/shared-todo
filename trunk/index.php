@@ -60,10 +60,20 @@ if (is_numeric($core->session->get('pid')))
 	$core->db->sql('select user_sort from user_sort where user_id= "' . $user_id . '" && project_id= "' . $core->session->get('pid') . '" limit 1;', __LINE__, __FILE__, 'ASSOC');
 	if ($core->db->result)
 	{
+		$sorted_data = array();
 		foreach (explode(",", $core->db->result['0']['user_sort']) as $sort_key) 
 		{
-			$sorted_data[] = $todos[$sort_key];
+			if (array_key_exists ($sort_key, $todos))
+			{
+				$sorted_data[] = $todos[$sort_key];
+				unset ($todos[$sort_key]);
+			}
+			else
+			{
+				echo "canno find key : " . $sort_key;
+			}
 		}
+		$sorted_data = array_merge($sorted_data, $todos);
 	}
 	# no user sort
 	else
@@ -88,7 +98,9 @@ $core->view->pid = $core->session->get('pid');
 $core->view->tid = $todo_id;
 
 # output for main
-$core->view->use_page('index');
+$core->view->use_page('project_list');
+$core->view->use_page('todo_list');
+$core->view->use_page('detail_todo');
 
 # output for footer
 $core->view->use_page('footer');

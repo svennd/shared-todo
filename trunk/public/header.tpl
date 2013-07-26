@@ -28,7 +28,7 @@
 	<script>
 	  $(function() {
 		 $( "#sortable" ).sortable({
-
+				items : '> li:not(.head)',
 				update : function () {
 					var neworder = new Array();
 					var pid = $('input#pid').val();
@@ -38,23 +38,19 @@
 						//push the object into the array
 						neworder.push(id);
 					});
-
-					$.post("save_list.php",{'neworder': neworder, 'pid': pid},function(data){});
+					$(".load_bar").show();
+					$.post("save_list.php",{'neworder': neworder, 'pid': pid},function(data){
+						$(".load_bar").hide();
+					});
 
 				}
 			});
 		/* not yet implemented */
 		 $('.edit').editable('dummy.php', { event     : "click",  style   : 'display: inline'	});
-		
-		$( "#sortable" ).disableSelection();
 	  });
 	</script>
-	
 	<!-- needed for dynamic change of scale for different type of screens -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-	<!-- we use a simple bootstrap template, this is to your likings ofcourse -->
-	<div class="row">
-	
 	
