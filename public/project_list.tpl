@@ -1,5 +1,5 @@
 <br/>
-<div class="span3 offset1">
+<div class="span4">
 <div class="well well-small" >	
 <ul class="nav nav-list">
 <li id="head" class="nav-header head">Projects :</li>
