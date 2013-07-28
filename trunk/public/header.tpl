@@ -46,9 +46,28 @@
 				}
 			});
 		/* not yet implemented */
-		 $('.edit').editable('dummy.php', { event     : "click",  style   : 'display: inline'	});
+		 $('.edit').editable('dummy.php', { cssclass : 'full-width'	});
+		 $('.todo_content').editable('save_title.php', { rows:10, type: 'textarea', cssclass : 'full-width' });
+
 	  });
 	</script>
+	
+	<style>
+	input.full-width {
+		box-sizing: border-box;
+		width: 100%;
+	}
+	.full-width textarea {
+		box-sizing: border-box;
+		width: 100%;
+	}
+	.full-width {
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	</style>
+
 	<!-- needed for dynamic change of scale for different type of screens -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

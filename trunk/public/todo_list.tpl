@@ -1,8 +1,8 @@
 <div class="span4">
+<div class="well well-small" >		  
 <?php if (is_numeric($pid)) : ?>
 <input type="hidden" id="pid" name="pid" value="<?php echo $pid; ?>" />
 
-<div class="well well-small" >		  
 <ul id="sortable" class="nav nav-list">
 <li id="head" class="nav-header head"><img src='public/loader.gif' class="load_bar" style="display:none;"/> Todo's :</li>
 <?php
@@ -28,6 +28,10 @@
 	</div>
 </form>
 
-</div>
+<?php else: ?>
+<p>
+	Select your project
+</p>
 <?php endif; ?>
+</div>
 </div>
