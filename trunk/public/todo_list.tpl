@@ -28,6 +28,18 @@
 	</div>
 </form>
 
+<ul class="nav nav-list">
+<li id="head" class="nav-header head">User's :</li>
+<li>You</li>
+</ul>
+<br/>
+<form action="?add_user" method="post" id="add_user" name="add_user">
+	<div class="input-append">
+	  <input class="input-medium" name="todo_title" id="todo_title" type="text">
+	  <button type="submit" class="btn">Add</button>
+	</div>
+</form>
+
 <?php else: ?>
 <p>
 	Select your project
