@@ -46,9 +46,24 @@
 				}
 			});
 		/* not yet implemented */
-		 $('.edit').editable('dummy.php', { cssclass : 'full-width'	});
-		 $('.todo_content').editable('save_title.php', { rows:10, type: 'textarea', cssclass : 'full-width' });
+		// $('.edit').editable('dummy.php', { cssclass : 'full-width'	});
+		 
+		 /* test test test */
+		// $('.todo_content').editable('save_title.php', { rows:10, type: 'textarea',  submit : 'OK', cssclass : '' });
 
+		
+		$(".edit").click(function () {
+			var text = $(this).text();
+			$(this).replaceWith( "<input type='text' name='title' class='full-width' value='" + text + "' />" );
+			$(".btn").show();
+		});
+		
+		$(".todo_content").click(function () {
+			var text = $(this).text();
+			if (text == "Click to edit") { text = ''; }
+			$(this).replaceWith( "<textarea name='content' class='full-width'>" + text + "</textarea>" );
+			$(".btn").show();
+		});
 	  });
 	</script>
 	
