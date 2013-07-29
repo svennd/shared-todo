@@ -43,6 +43,26 @@ if ($new_todo && !empty($_POST['todo_title']) && is_numeric($core->session->get(
 	$core->db->sql('INSERT INTO `todo_list` (`title` ,`project` , `user`) VALUES ("' . $_POST['todo_title'] . '",  "'. $core->session->get('pid') .'",  "' . $user_id . '");', __FILE__, __LINE__, 'ASSOC');
 }
 
+# change content of todo
+if ($change_topic)
+{
+	$content 	= (isset($_POST['content'])) ? htmlspecialchars($_POST['content']) : false;
+	$title 		= (isset($_POST['title'])) ? htmlspecialchars($_POST['title']) : false;
+
+	if($content && $title)
+	{
+		$core->db->sql('UPDATE `todo_list` SET `content` = "' . $content . '", `title` = "' . $title . '" WHERE `id`="' . $todo_id . '" && user = "' . $user_id . '" limit 1;', __FILE__, __LINE__);
+	} 
+	else if ($content)
+	{
+		$core->db->sql('UPDATE `todo_list` SET `content` = "' . $content . '" WHERE `id`="' . $todo_id . '" && user = "' . $user_id . '" limit 1;', __FILE__, __LINE__);
+	}
+	else if ($title)
+	{
+		$core->db->sql('UPDATE `todo_list` SET `title` = "' . $title . '" WHERE `id`="' . $todo_id . '" && user = "' . $user_id . '" limit 1;', __FILE__, __LINE__);
+	}
+}
+
 $core->db->sql('SELECT * FROM project_list where `user_id` = "' . $user_id . '";', __FILE__, __LINE__);
 $core->view->projects = $core->db->result;
 
@@ -83,11 +103,6 @@ if (is_numeric($core->session->get('pid')))
 	$core->view->todos = $sorted_data;
 }
 
-# change content of todo
-if ($change_topic)
-{
-	$core->db->sql('UPDATE `todo_list` SET `content` = "' . $_POST['content'] . '" WHERE `id`="' . $todo_id . '";');
-}
 
 if ($todo_id) 
 {
