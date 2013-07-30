@@ -65,11 +65,10 @@
 			$(".btn").show();
 		});
 		
-		$('.typeahead').typeahead({
+		$('#typeahead').typeahead({
         source: function (query, process) {
-		console.log('query');
             return $.ajax({
-                url: 'dummy.php',
+                url: 'get_user_list.php',
                 type: 'post',
                 data: { query: query },
                 dataType: 'json',
