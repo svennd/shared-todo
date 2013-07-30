@@ -64,7 +64,25 @@
 			$(this).replaceWith( "<textarea name='content' class='full-width'>" + text + "</textarea>" );
 			$(".btn").show();
 		});
+		
+		$('.typeahead').typeahead({
+        source: function (query, process) {
+		console.log('query');
+            return $.ajax({
+                url: 'dummy.php',
+                type: 'post',
+                data: { query: query },
+                dataType: 'json',
+                success: function (jsonResult) {
+                    return typeof jsonResult == 'undefined' ? false : process(jsonResult);
+                }
+            });
+        }
+    });
+	
 	  });
+
+
 	</script>
 	
 	<style>
