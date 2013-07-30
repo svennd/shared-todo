@@ -204,18 +204,28 @@ final class user
 	* get user id
 	* @return int
 	*/
-	public function get_user_id()
+	public function get_user_id($name = false)
 	{
-		return (int) $this->core->session->get('user_id');
+		if (!$name)
+		{
+			return (int) $this->core->session->get('user_id');
+		}	
+		$res = $this->core->db->sql('select id from user_data where username= "' . $name . '" limit 0,1;', __FILE__, __LINE__);
+		return ($res) ? $res['id'] : false;
 	}
 	
 	/**
 	* get user name
 	* @return string
 	*/	
-	public function get_user_name()
+	public function get_user_name($id = false)
 	{
-		return $this->core->session->get('user_name');
+		if (!$id)
+		{
+			return $this->core->session->get('user_name');
+		}
+		$res = $this->core->db->sql('select username from user_data where id= "' . (int) $id . '" limit 0,1;', __FILE__, __LINE__);	
+		return ($res) ? $res['username'] : false;
 	}
 	
 	/**
