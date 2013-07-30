@@ -31,11 +31,21 @@
 <ul class="nav nav-list">
 <li id="head" class="nav-header head">User's :</li>
 <li>You</li>
+<?php
+	if ($other_users)
+	{
+		foreach ($other_users as $user)
+		{
+			echo "<li>" . $user['username'] . "</li>";
+		}
+	}
+?>
 </ul>
 <br/>
 <form action="?add_user" method="post" id="add_user" name="add_user" autocomplete="off">
 	<div class="input-append">
-	  <input class="input-medium" autocomplete="off" name="add_user" id="typeahead" type="text">
+	  <input class="input-medium" autocomplete="off" name="user" id="typeahead" type="text">
+	  <input type="hidden" name="pid" value="<?php echo $pid; ?>" />
 	  <button type="submit" class="btn">Add</button>
 	</div>
 </form>

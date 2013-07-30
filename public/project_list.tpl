@@ -8,7 +8,7 @@
 	{
 		foreach ($projects as $project)
 		{
-			echo "<li " . (($project['id'] == $pid) ? 'class="active"' : '') . "><a href='?project_id=" . $project['id'] . "'>". $project['name'] ."</a></b></li>";
+			echo "<li " . (($project['id'] == $pid) ? 'class="active"' : '') . "><a href='?project_id=" . $project['id'] . "'>". $project['name'] ." " . ( (isset($project['project_id'])) ? '(S)' : '' ) . "</a></li>";
 		}
 	}
 ?>

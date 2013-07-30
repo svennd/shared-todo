@@ -19,12 +19,33 @@ $new_todo 		= (isset($_GET['add_todo'])) 	? true : false;
 $project_id 	= (isset($_GET['project_id'])) 	? (int) $_GET['project_id'] : false;
 $todo_id 		= (isset($_GET['todo_id'])) 	? (int) $_GET['todo_id'] : false;
 $change_topic	= (isset($_GET['change_topic']))? true : false;
+$add_user		= (isset($_GET['add_user']))? true : false;
 
 # core settings
 $user_id = $core->user->get_user_id();
 
 # output for the header
 $core->view->use_page('header');
+
+if ($add_user)
+{
+	$new_user 	= $_POST['user'];
+	$pid_check 	= $_POST['pid'];
+	$pid		= $core->session->get('pid');
+	
+	# is it a user ?
+	$new_team_member_id = $core->user->get_user_id(htmlspecialchars($new_user));
+	
+	if($new_team_member_id && $pid_check == $pid)
+	{
+		
+		$core->db->sql('INSERT INTO `project_shared` (`project_id` ,`user_id`) VALUES ("' . (int) $pid .'",  "'. (int) $new_team_member_id .'");');
+	}
+	else
+	{
+		// user not found error
+	}
+}
 
 if ($new_project && !empty($_POST['project_name']))
 {
@@ -63,11 +84,19 @@ if ($change_topic)
 	}
 }
 
-$core->db->sql('SELECT * FROM project_list where `user_id` = "' . $user_id . '";', __FILE__, __LINE__);
-$core->view->projects = $core->db->result;
+$own = $core->db->sql('SELECT * FROM project_list where `user_id` = "' . $user_id . '";', __FILE__, __LINE__);
+$shared = $core->db->sql('select * from project_shared join project_list on project_list.id = project_shared.project_id where project_shared.user_id = "' . $user_id . '" ;');
+// $core->view->projects = $own;
+$core->view->projects = array_merge($own, $shared);
 
+# an open active project
 if (is_numeric($core->session->get('pid')))
 {
+	# get other users
+	$core->db->sql('select user_data.username from project_shared JOIN user_data on user_data.id = project_shared.user_id where project_id = "' . $core->session->get('pid') . '";');
+	$core->view->other_users = $core->db->result;
+	
+	# get todo's
 	$data = $core->db->sql('SELECT title, id FROM todo_list where project = ' . $core->session->get('pid') . ' && user = ' . $user_id . ';', __FILE__, __LINE__);
 	# user sort (ugly)
 	
