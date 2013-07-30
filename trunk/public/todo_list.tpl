@@ -35,12 +35,11 @@
 <br/>
 <form action="?add_user" method="post" id="add_user" name="add_user" autocomplete="off">
 	<div class="input-append">
-	  <input class="typeahead" autocomplete="off" data-provide="typeahead" name="typeahead" id="typeahead" type="text">
+	  <input class="input-medium" autocomplete="off" name="add_user" id="typeahead" type="text">
 	  <button type="submit" class="btn">Add</button>
 	</div>
 </form>
 
-<input type="text" class="span3" style="margin: 0 auto;" data-provide="typeahead" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'>
 <?php else: ?>
 <p>
 	Select your project
