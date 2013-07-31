@@ -37,7 +37,17 @@ final class todo
 	*/
 	public function get_todo_list ($pid, $user_id) 
 	{
-		$todos_list = $this->core->db->sql('SELECT title, id FROM todo_list WHERE project = "' . $pid . '" && user = "' . $user_id . '" && status = "0";', __FILE__, __LINE__);
+		$todos_list = $this->core->db->sql('
+		SELECT 
+			title, id 
+		FROM 
+			todo_list 
+		WHERE 
+			(
+				project = "' . $pid . '" || 
+				project IN (select project_id from project_shared where user_id="'. $user_id .'") 
+			) && 
+			status = "0";', __FILE__, __LINE__);
 		
 		# array(key, data data) to key => array(data)
 		$todos = array();
@@ -94,15 +104,15 @@ final class todo
 	{
 		if($content && $title)
 		{
-			$this->core->db->sql('UPDATE `todo_list` SET `content` = "' . $content . '", `title` = "' . $title . '" WHERE `id`="' . $todo_id . '" && user = "' . $user_id . '" limit 1;', __FILE__, __LINE__);
+			return $this->core->db->sql('UPDATE `todo_list` SET `content` = "' . $content . '", `title` = "' . $title . '" WHERE `id`="' . $todo_id . '" && (user = "' . $user_id . '" || project IN (select project_id from project_shared where user_id= "'.$user_id.'") ) limit 1;', __FILE__, __LINE__);
 		} 
 		else if ($content)
 		{
-			$this->core->db->sql('UPDATE `todo_list` SET `content` = "' . $content . '" WHERE `id`="' . $todo_id . '" && user = "' . $user_id . '" limit 1;', __FILE__, __LINE__);
+			return $this->core->db->sql('UPDATE `todo_list` SET `content` = "' . $content . '" WHERE `id`="' . $todo_id . '" && (user = "' . $user_id . '" || project IN (select project_id from project_shared where user_id= "'.$user_id.'") )  limit 1;', __FILE__, __LINE__);
 		}
 		else if ($title)
 		{
-			$this->core->db->sql('UPDATE `todo_list` SET `title` = "' . $title . '" WHERE `id`="' . $todo_id . '" && user = "' . $user_id . '" limit 1;', __FILE__, __LINE__);
+			return $this->core->db->sql('UPDATE `todo_list` SET `title` = "' . $title . '" WHERE `id`="' . $todo_id . '" && 	(user = "' . $user_id . '" || project IN (select project_id from project_shared where user_id= "'.$user_id.'") ) limit 1;', __FILE__, __LINE__);
 		}
 	}
 	
@@ -119,6 +129,9 @@ final class todo
 		
 	}
 	
+	/*
+	* get todo
+	*/
 	public function get_todo ($todo_id, $user_id)
 	{
 		return $this->core->db->sql('
