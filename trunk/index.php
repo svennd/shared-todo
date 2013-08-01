@@ -25,6 +25,8 @@ $add_user		= (isset($_GET['add_user']))? true : false;
 $user_id = $core->user->get_user_id();
 
 # output for the header
+$core->view->logged_in = true;
+$core->view->user_name = $core->user->get_user_name();
 $core->view->use_page('header');
 
 if ($add_user)
@@ -61,7 +63,8 @@ if ($project_id)
 
 if ($new_todo && !empty($_POST['todo_title']) && is_numeric($core->session->get('pid')))
 {
-	$core->todo->add_todo ($_POST['todo_title'], "", $core->session->get('pid'), $user_id);
+	$content = "";
+	$core->todo->add_todo ($_POST['todo_title'], $content, $core->session->get('pid'), $user_id);
 }
 
 # change content of todo
@@ -82,9 +85,10 @@ $core->view->projects = array_merge($own, $shared);
 if (is_numeric($core->session->get('pid')))
 {
 	$pid = $core->session->get('pid');
+	
 	# get other users
-	$core->db->sql('select user_data.username from project_shared JOIN user_data on user_data.id = project_shared.user_id where project_id = "' . $pid . '";');
-	$core->view->other_users = $core->db->result;
+	$user_who_can_view = $core->db->sql('select user_data.username from project_shared JOIN user_data on user_data.id = project_shared.user_id where project_id = "' . $pid . '" && user_id != "' . $user_id . '";');
+	$core->view->other_users = $user_who_can_view;
 	
 	# get todo's
 	$core->view->todos = $core->todo->get_todo_list ($pid, $user_id);

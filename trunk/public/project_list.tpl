@@ -1,4 +1,3 @@
-<br/>
 <div class="span4">
 <div class="well well-small" >	
 <ul class="nav nav-list">

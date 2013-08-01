@@ -3,5 +3,4 @@
 <p>
 <?php echo $report; ?>
 </p>
-<a href="index.php">Start going funky</a>
 </div>

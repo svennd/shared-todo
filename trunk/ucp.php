@@ -26,6 +26,8 @@ $register_new_user 	= (isset($_GET['reg']) ) ? true : false;
 $login_user 		= (isset($_GET['log']) ) ? true : false;
 
 # output for the header
+
+$core->view->logged_in = false;
 $core->view->use_page('header');
 
 # reg new user
