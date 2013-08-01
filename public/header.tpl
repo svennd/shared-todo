@@ -97,11 +97,48 @@
 		box-sizing: border-box;
 		width: 100%;
 	}
-
+	body {
+	  padding-top: 60px;
+	}
+	@media (max-width: 979px) {
+	  body {
+		padding-top: 0px;
+	  }
+	}
 	</style>
 
 	<!-- needed for dynamic change of scale for different type of screens -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+	<div class="container">
+	  <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+	  <a class="brand" href="index.php">Shared ToDo</a>
+	  <div class="nav-collapse collapse">
+		<ul class="nav">
+		  <li class="active"><a href="index.php">Home</a></li>
+		  <?php if ($logged_in) : ?>
+		  <li><a href="ucp.php?byebye">Logout</a></li>
+		  <?php endif; ?>
+		</ul>
+		  <?php if (!$logged_in) : ?>
+		<form action="ucp.php?log&data" method="POST" class="navbar-form pull-right">
+		  <input class="span2" name="username" type="text" placeholder="Username">
+		  <input class="span2" name="password" type="password" placeholder="Password">
+		  <button type="submit" class="btn">Sign in</button>
+		</form>
+			<?php else : ?>
+			<div class="navbar-form pull-right navbar-text">
+			<?php echo $user_name; ?>			
+			</div>
+			<?php endif; ?>
+	  </div><!--/.nav-collapse -->
+	</div>
+  </div>
+</div>
+	
+    <div class="container">
+		<div class="row">
 	
