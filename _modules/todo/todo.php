@@ -27,18 +27,42 @@ final class todo
 	}
 
 	/*
+	* check if user is owner
+	*/
+	public function is_owner ($pid, $user_id)
+	{
+		if ($this->core->db->sql('SELECT id FROM project_list WHERE user_id = "' . (int) $user_id . '" && id ="' . (int) $pid . '" limit 1;', __FILE__, __LINE__)) 
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/*
 	* add user to shared to_do list
 	*/
 	public function add_user_to_shared_project ($pid, $adding_user, $user_id)
 	{		
 		if ($adding_user != $user_id)
 		{
-			print $pid;
-			return $this->core->db->sql('INSERT INTO `project_shared` (`project_id` ,`user_id`) VALUES ("' . (int) $pid .'",  "'. (int) $adding_user .'");');
+			# ignore : in case it already exists (there is a unique on project_id and user_id)
+			return $this->core->db->sql('INSERT IGNORE INTO `project_shared` (`project_id` ,`user_id`) VALUES ("' . (int) $pid .'",  "'. (int) $adding_user .'");');
 		}
 		return false;
 	}
 
+	/*
+	* remove team members
+	*/
+	public function remove_user_from_shared_project ($pid, $remove_user, $user_id)
+	{
+		# check if user is owner
+		if ($this->is_owner($pid, $user_id))
+		{
+			$this->core->db->sql('DELETE FROM `project_shared` WHERE `project_id` = "'. (int) $pid .'" AND `user_id` = "' . (int) $remove_user . '" limit 1;');
+		}
+	}
+	
 	/*
 	* get todo list
 	* these get sorted using a string; not the best method;
@@ -46,17 +70,35 @@ final class todo
 	*/
 	public function get_todo_list ($pid, $user_id) 
 	{
-		$todos_list = $this->core->db->sql('
-		SELECT 
-			title, id 
-		FROM 
-			todo_list 
-		WHERE 
-			(
-				project = "' . $pid . '" || 
-				project IN (select project_id from project_shared where user_id="'. $user_id .'") 
-			) && 
-			status = "0";', __FILE__, __LINE__);
+	
+		if ($this->is_owner($pid, $user_id))
+		{
+			$todos_list = $this->core->db->sql('
+				SELECT 
+					title, id 
+				FROM 
+					todo_list 
+				WHERE 
+					(
+						project = "' . $pid . '"
+					) 
+					;', __FILE__, __LINE__);
+
+		}
+		else
+		{
+			$todos_list = $this->core->db->sql('
+				SELECT 
+					title, id 
+				FROM 
+					todo_list 
+				WHERE 
+					(
+						project = "' . $pid . '" || 
+						project IN (select project_id from project_shared where user_id="'. $user_id .'") 
+					) 
+					;', __FILE__, __LINE__);
+		}
 		
 		# array(key, data data) to key => array(data)
 		$todos = array();

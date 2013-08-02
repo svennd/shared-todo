@@ -24,11 +24,6 @@ $add_user		= (isset($_GET['add_user']))? true : false;
 # core settings
 $user_id = $core->user->get_user_id();
 
-# output for the header
-$core->view->logged_in = true;
-$core->view->user_name = $core->user->get_user_name();
-$core->view->use_page('header');
-
 if ($add_user)
 {
 	$new_user 	= $_POST['user'];
@@ -38,15 +33,14 @@ if ($add_user)
 	# is it a user ?
 	$new_team_member_id = $core->user->get_user_id(htmlspecialchars($new_user));
 	
-	if($new_team_member_id && $pid_check == $pid && $new_team_member_id != $user_id)
+	#
+	if($new_team_member_id && $pid_check == $pid)
 	{
+		$x = $core->todo->add_user_to_shared_project($pid, $new_team_member_id, $user_id);
 		
-		$core->db->sql('INSERT INTO `project_shared` (`project_id` ,`user_id`) VALUES ("' . (int) $pid .'",  "'. (int) $new_team_member_id .'");');
+		echo ($x) ? htmlspecialchars($new_user) : "";
 	}
-	else
-	{
-		// user not found error
-	}
+	$core->close();
 }
 
 if ($new_project && !empty($_POST['project_name']))
@@ -57,6 +51,7 @@ if ($new_project && !empty($_POST['project_name']))
 if ($project_id) 
 {
 	$core->session->put('pid', (int) $_GET['project_id']);
+	
 	# unset the tid
 	$todo_id = false;
 }
@@ -99,6 +94,11 @@ if ($todo_id)
 {
 	$core->view->topic = $core->todo->get_todo ($todo_id, $user_id);
 }
+
+# output for the header
+$core->view->logged_in = true;
+$core->view->user_name = $core->user->get_user_name();
+$core->view->use_page('header');
 
 $core->view->pid = $core->session->get('pid');
 $core->view->tid = $todo_id;
