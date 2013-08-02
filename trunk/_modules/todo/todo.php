@@ -25,11 +25,20 @@ final class todo
 		// reference to the core object
 		$this->core = $core;
 	}
-	
+
 	/*
-	*	Functions that work on todo's
+	* add user to shared to_do list
 	*/
-	
+	public function add_user_to_shared_project ($pid, $adding_user, $user_id)
+	{		
+		if ($adding_user != $user_id)
+		{
+			print $pid;
+			return $this->core->db->sql('INSERT INTO `project_shared` (`project_id` ,`user_id`) VALUES ("' . (int) $pid .'",  "'. (int) $adding_user .'");');
+		}
+		return false;
+	}
+
 	/*
 	* get todo list
 	* these get sorted using a string; not the best method;
