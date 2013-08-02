@@ -124,6 +124,8 @@ final class core
 		{
 			$this->module_handeling ( $unload_module, 'destruct' );
 		}
+		# no execution beyond this point
+		exit;
 	}
 	
 	/**
