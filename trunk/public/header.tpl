@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl-be">
+<html lang="en">
 <head>
 
 	<!-- title allong with other values can be set as part of page_info in the initialisation of the page -->
@@ -18,10 +17,10 @@
 	</title>
 	
 	<!-- bootstrap http://twitter.github.io/bootstrap/ -->
-	<link href="<?php echo $page_info->path; ?>public/bootstrap/bootstrap.min.css" rel="stylesheet" />
 	<script src="<?php echo $page_info->path; ?>public/bootstrap/jquery.min.js"></script>
 	<script src="<?php echo $page_info->path; ?>public/bootstrap/jquery_ui.min.js"></script>
 	<script src="<?php echo $page_info->path; ?>public/bootstrap/jeditable.min.js"></script>
+	<link href="<?php echo $page_info->path; ?>public/bootstrap/bootstrap.min.css" rel="stylesheet" />
 	<script src="<?php echo $page_info->path; ?>public/bootstrap/bootstrap.min.js"></script>
 	
 	<!-- sortable -->
@@ -121,8 +120,10 @@
 
 	<!-- needed for dynamic change of scale for different type of screens -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 </head>
 <body>
+<div class="container">
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
 	<div class="container">
@@ -150,7 +151,5 @@
 	</div>
   </div>
 </div>
-	
-    <div class="container">
 		<div class="row">
 	
