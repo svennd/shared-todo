@@ -14,7 +14,9 @@ final class mysql
 	public 
 		$core,
 		$db_ready 	= false,
-		$result		= false
+		$result		= false,
+		$debug		= true,
+		$count_queries = 0
 		;
 	
 	/**
@@ -90,7 +92,13 @@ final class mysql
 	* @param string result type
 	*/	
 	public function sql ($query, $file = 'unkown', $lijn = 'unknown', $method = 'BOTH')
-	{		
+	{	
+		# debug
+		if ($this->debug)
+		{
+			$this->count_queries++;
+		}
+		
 		# send the query
 		$result = mysql_query($query) or die('DB error : (' . $lijn . ', ' . $file . ') ' . mysql_errno() . ' ' . mysql_error() . ' could not execute query, ' . htmlspecialchars($query));
 		
@@ -180,6 +188,11 @@ final class mysql
 		{
 			mysql_close($this->db_link);
 			$this->db_ready = false;
+		}
+		
+		if ( $this->debug )
+		{
+			echo "mysql queries : " . $this->count_queries . "<br/>\n";
 		}
 	}
 }

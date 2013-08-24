@@ -1,0 +1,1 @@
+<script>$(function(){$('#setting_mondal').modal('show');});</script>

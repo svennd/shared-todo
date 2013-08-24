@@ -39,6 +39,42 @@ final class todo
 	}
 	
 	/*
+	*	general project list available to the user
+	*/
+	public function get_project_list ($user_id) 
+	{
+		$own = $this->core->db->sql('
+			SELECT 
+				id, user_id, name, 
+				"1" as owner,
+				(SELECT count(user_id) FROM project_shared WHERE project_list.id = project_shared.project_id) as shared
+			FROM 
+				project_list
+			WHERE 
+				`user_id` = "' . $user_id . '";
+			', __FILE__, __LINE__, 'ASSOC');
+			
+		$shared = $this->core->db->sql('
+			SELECT 
+				project_list.id, project_list.user_id, project_list.name, 
+				"0" as owner,
+				"1" as shared
+			FROM 
+				project_shared 
+			JOIN 
+				project_list 
+			ON 
+				project_list.id = project_shared.project_id 
+				
+			WHERE 
+				project_shared.user_id = "' . $user_id . '";
+				
+			', __FILE__, __LINE__, 'ASSOC');
+
+		return array_merge($own, $shared);
+	}
+	
+	/*
 	* add user to shared to_do list
 	*/
 	public function add_user_to_shared_project ($pid, $adding_user, $user_id)
