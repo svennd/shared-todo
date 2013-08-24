@@ -63,18 +63,6 @@
 			$(this).replaceWith( "<textarea name='content' class='full-width'>" + text + "</textarea>" );
 			$(".btn").show();
 		});
-		
-	  $('#add_user_submit').click(function(e){
-		  e.preventDefault();
-		  $.post('index.php?add_user', 
-			 $('#add_user').serialize(), 
-			 function(data, status, xhr){
-				if (data != "")
-				{
-					$("#user_list").append('<li>' + data +'</li>');
-				}
-			 });
-		});
 	
 		$('#typeahead').typeahead({
         source: function (query, process) {

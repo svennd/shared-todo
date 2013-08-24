@@ -40,7 +40,7 @@ if ($add_user)
 		
 		echo ($x) ? htmlspecialchars($new_user) : "";
 	}
-	$core->close();
+	$mondal_open = true;
 }
 
 if ($new_project && !empty($_POST['project_name']))
@@ -71,10 +71,8 @@ if ($change_topic)
 	$core->todo->change_todo($todo_id, $title, $content, $user_id);
 }
 
-$own = $core->db->sql('SELECT * FROM project_list where `user_id` = "' . $user_id . '";', __FILE__, __LINE__);
-$shared = $core->db->sql('select * from project_shared join project_list on project_list.id = project_shared.project_id where project_shared.user_id = "' . $user_id . '" ;');
-
-$core->view->projects = array_merge($own, $shared);
+# get all projects
+$core->view->projects = $core->todo->get_project_list($user_id);
 
 # an open active project
 if (is_numeric($core->session->get('pid')))
@@ -111,12 +109,19 @@ $core->view->pid = $core->session->get('pid');
 $core->view->tid = $todo_id;
 
 # output for main
+$core->view->use_page('mondal');
+# open mondal ?
+if (isset($mondal_open)) 
+{
+	$core->view->use_page('open_mondal');
+}
 $core->view->use_page('project_list');
 $core->view->use_page('todo_list');
 $core->view->use_page('detail_todo');
 
 # output for footer
 $core->view->use_page('footer');
+
 
 # show output to screen
 $core->close();
