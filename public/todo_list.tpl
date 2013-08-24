@@ -16,7 +16,12 @@
 
 			echo 
 					"<li id='" . $todo['id'] . "' ". (($todo['id'] == $tid) ? "class='active'" : "").">
-						<a href='?todo_id=" . $todo['id'] . "'><i class='icon-resize-vertical'></i>". $todo['title'] ."</a>
+						 <label>
+							<input type='checkbox' name='todo_finished' id='" . $todo['id'] . "' />
+							<a href='?todo_id=" . $todo['id'] . "'><i class='icon-resize-vertical'></i>
+								". $todo['title'] ."
+							</a>
+						</label>
 					</li>";
 
 		}
@@ -31,6 +36,27 @@
 	</div>
 </form>
 
+<ul class="nav nav-list">
+<li id="head" class="nav-header head">User's :</li>
+<li>Owner : <?php echo ($owner) ? $owner : "You"; ?></li>
+<?php
+	if ($other_users)
+	{
+		foreach ($other_users as $user)
+		{
+			echo "<li>" . $user['username'] . "</li>";
+		}
+	}
+?>
+</ul>
+<br/>
+<form action="?add_user" method="post" id="add_user" name="add_user" autocomplete="off">
+	<div class="input-append">
+	  <input class="input-medium" autocomplete="off" name="user" id="typeahead" type="text">
+	  <input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+	  <button type="submit" class="btn">Add</button>
+	</div>
+</form>
 <?php else: ?>
 <p>
 	Select your project

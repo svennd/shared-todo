@@ -81,6 +81,13 @@ if (is_numeric($core->session->get('pid')))
 {
 	$pid = $core->session->get('pid');
 	
+	# get owner of project
+	$owner = $core->db->sql('SELECT user_id from project_list where id = "' . $pid . '" limit 0,1;', __FILE__, __LINE__);
+	
+	# if owner is user, show this, otherwise show username of owner
+	$core->view->owner = ($owner['user_id'] == $user_id) ? false : $core->user->get_user_name($owner['user_id']);
+	
+	
 	# get other users
 	$user_who_can_view = $core->db->sql('select user_data.username from project_shared JOIN user_data on user_data.id = project_shared.user_id where project_id = "' . $pid . '" && user_id != "' . $user_id . '";');
 	$core->view->other_users = $user_who_can_view;

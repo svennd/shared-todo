@@ -1,4 +1,5 @@
-		</div> <!-- row -->
-	</div> <!-- container -->
+
+	</div> <!-- row -->
+</div> <!-- container -->
 </body>
 </html>
