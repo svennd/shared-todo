@@ -11,8 +11,8 @@ if(!empty($projects))
 		echo "<li " . (($project['id'] == $pid) ? 'class="active"' : '') . ">
 				<a href='?project_id=" . $project['id'] . "'>
 				<span style='position:inherit;right:40px;'>
-				" . ( ($project['shared'] == 1) ? '<i class="icon-share"></i>' : '<span style="width:14px;height:14px;">&nbsp;</span>' ) . "
-				" . ( ($project['owner'] > 0) ? '<i class="icon-home"></i>' : '<span style="width:14px;height:14px;">&nbsp;</span>' ) . "
+				" . ( ($project['shared'] == 1) ? '<i class="icon-share"></i>' : '<i class="icon-"></i>' ) . "
+				" . ( ($project['owner'] > 0) ? '<i class="icon-home"></i>' : '<i class="icon-"></i>' ) . "
 				</span>
 				<span style='position:inherit;left:30px;'>
 				". $project['name'] ." 
@@ -24,7 +24,6 @@ if(!empty($projects))
 }
 
 ?>
-
 </ul>
 <br/>
 <div class="nav-header head">Settings</div>

@@ -12,7 +12,8 @@
 final class todo
 {	
 	public
-		$core
+		$core,
+		$user_owned_projects = array()
 		;
 	
 	
@@ -31,7 +32,13 @@ final class todo
 	*/
 	public function is_owner ($pid, $user_id)
 	{
-		if ($this->core->db->sql('SELECT id FROM project_list WHERE user_id = "' . (int) $user_id . '" && id ="' . (int) $pid . '" limit 1;', __FILE__, __LINE__)) 
+		# already fetched
+		if (in_array($pid, $this->user_owned_projects))
+		{
+			return true;
+		}
+		# not yet fetched
+		else if ($this->core->db->sql('SELECT id FROM project_list WHERE user_id = "' . (int) $user_id . '" && id ="' . (int) $pid . '" limit 1;', __FILE__, __LINE__)) 
 		{
 			return true;
 		}
@@ -71,6 +78,14 @@ final class todo
 				
 			', __FILE__, __LINE__, 'ASSOC');
 
+		# save list
+		$own_cache = array();
+		foreach ($own as $data)
+		{
+			$own_cache[] = $data['id'];
+		}
+		
+		$this->user_owned_projects = $own_cache;
 		return array_merge($own, $shared);
 	}
 	
@@ -106,7 +121,6 @@ final class todo
 	*/
 	public function get_todo_list ($pid, $user_id) 
 	{
-	
 		if ($this->is_owner($pid, $user_id))
 		{
 			$todos_list = $this->core->db->sql('
